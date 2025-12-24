@@ -4,7 +4,10 @@ import { router } from '@/router'
 import App from './App.vue'
 import '@/assets/css/index.css'
 
-createApp(App)
+const app = createApp(App)
   .use(router)
   .use(i18n)
-  .mount('#app')
+
+app.config.globalProperties.cn = cn
+
+app.mount('#app')

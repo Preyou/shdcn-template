@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import * as UasComps from '@vueuse/components'
-import { words } from 'es-toolkit/string'
+import RekaResolver from 'reka-ui/resolver'
 import AutoImport from 'unplugin-auto-import/vite'
 import Icons from 'unplugin-icons/vite'
 import Components from 'unplugin-vue-components/vite'
@@ -58,13 +58,14 @@ export default defineConfig({
       dirs: ['src/components', '!src/components/ui'],
       dts: './types/auto/components.d.ts',
       resolvers: [
-        (name) => {
-          console.log(name)
+        RekaResolver(),
+        // (name) => {
+        //   console.log(name)
 
-          if (name.startsWith('Ui')) {
-            return { from: `@/components/ui/${words(name)[1].toLowerCase()}`, name: name.slice(2) }
-          }
-        },
+        //   if (name.startsWith('Ui')) {
+        //     return { from: `@/components/ui/${words(name)[1].toLowerCase()}`, name: name.slice(2) }
+        //   }
+        // },
         (name) => {
           if (
             Object.keys(UasComps)
@@ -138,6 +139,7 @@ export default defineConfig({
             } as ComponentResolverObject),
         ),
       ],
+      globs: ['src/components/ui/**/*.vue'],
     }),
     AutoImport({
       dts: './types/auto/auto-imports.d.ts',
@@ -155,6 +157,7 @@ export default defineConfig({
         {
           '@/locales/index.ts': [['global', '$i18n']],
           'vue-i18n': ['useI18n'],
+          '@/lib/utils': ['cn'],
         },
         VueRouterAutoImports,
       ],
