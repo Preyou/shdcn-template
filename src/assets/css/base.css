@@ -4,4 +4,5 @@
 
 body {
   @apply bg-background text-foreground;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }

@@ -6,6 +6,8 @@
 @import './components.css' layer(components);
 @import './utilities.css' layer(utilities);
 
+@plugin "@iconify/tailwind4";
+
 @layer theme, base, components, utilities;
 
 @custom-variant dark (&:is(.dark *));
