@@ -6,8 +6,8 @@ import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import * as UasComps from '@vueuse/components'
+import { words } from 'es-toolkit/string'
 import AutoImport from 'unplugin-auto-import/vite'
-import IconsResolver from 'unplugin-icons/resolver'
 import Icons from 'unplugin-icons/vite'
 import Components from 'unplugin-vue-components/vite'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
@@ -30,7 +30,7 @@ export default defineConfig({
         if (root.children.some(({ fullPath }) => !fullPath.endsWith('/:path(.*)'))) {
           const route404 = root.insert(
             ':path(.*)',
-            fileURLToPath(new URL('./src/components/page/404.vue', import.meta.url)).replaceAll(
+            fileURLToPath(new URL('./src/components/pages/404.vue', import.meta.url)).replaceAll(
               '\\',
               '/',
             ),
@@ -55,10 +55,16 @@ export default defineConfig({
 
     Components({
       directoryAsNamespace: true,
-      dirs: ['src/components', 'src/api/components'],
+      dirs: ['src/components', '!src/components/ui'],
       dts: './types/auto/components.d.ts',
       resolvers: [
-        IconsResolver({ customCollections: ['app-icons'], prefix: 'i' }),
+        (name) => {
+          console.log(name)
+
+          if (name.startsWith('Ui')) {
+            return { from: `@/components/ui/${words(name)[1].toLowerCase()}`, name: name.slice(2) }
+          }
+        },
         (name) => {
           if (
             Object.keys(UasComps)

@@ -103,10 +103,8 @@ export default antfu(
         tailwindcss: {},
       },
       extends: ['.eslintrc-auto-import.json'],
-    },
-
-  ),
+    }),
     ignores: ['src/components/ui/**/*'],
   },
-  tailwind,
+  tailwind.configs['flat/recommended'][0],
 )
