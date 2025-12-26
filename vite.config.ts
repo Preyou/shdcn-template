@@ -16,9 +16,14 @@ import { defineConfig } from 'vite'
 import devtoolsJson from 'vite-plugin-devtools-json'
 import { envParse } from 'vite-plugin-env-parse'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import openapiToDts from 'openapi-to-dts/vite'
 
 export default defineConfig({
   plugins: [
+    openapiToDts({
+      uri: 'http://localhost:3000/openapi/json',
+      writeTo: new URL('./types/auto/openapi.d.ts', import.meta.url),
+    }),
     vue(),
     tailwindcss(),
     VueI18nPlugin({

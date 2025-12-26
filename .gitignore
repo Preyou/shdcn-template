@@ -25,3 +25,4 @@ dist-ssr
 
 types/auto/*
 .eslintrc-auto-import.json
+.cache
